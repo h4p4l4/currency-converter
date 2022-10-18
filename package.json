@@ -1,6 +1,6 @@
 {
   "name": "react-project-template",
-  "homepage": "https://myusername.github.io/my-app",
+  "homepage": "https://denis-khristyuk.github.io/currency-converter",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
