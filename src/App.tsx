@@ -15,6 +15,7 @@ function App() {
     const [secondCurrency, setSecondCurrency] = useState('UAH');
     const [firstInputValue, setFirstInputValue] = useState(0);
     const [secondInputValue, setSecondInputValue] = useState(0);
+    const [inputInFocus, setInputInFocus] = useState('');
 
     convert('USD', 'UAH', setUsdUahRate);
     convert('EUR', 'UAH', setEurUahRate);
@@ -29,12 +30,7 @@ function App() {
     };
 
     const handleFirstInputChange = (value: any) => {
-        setFirstInputValue(value); //value = 1
-        console.log(firstInputValue); //0
-        const calculated = calculateValue(firstInputValue, firstCurrency, secondCurrency); //первым параметром туда
-        //передаётся 0, соответственно возвращается тоже 0. Нужное значение передаётся только при повторном вызове handleFirstInputChange
-        setSecondInputValue(calculated);
-        console.log(secondInputValue); //Должно быть 36.41, на деле 0
+        setFirstInputValue(value);
     };
     const handleSecondInputChange = (value: any) => {
         setSecondInputValue(value);
@@ -87,8 +83,19 @@ function App() {
     return (
         <div className="App">
             <header className="header">
-                <p className="header__text">USD to UAH - {UsdUahRate}</p>
-                <p className="header__text">EUR to UAH - {EurUahRate}</p>
+                {
+                    UsdUahRate && EurUahRate
+                        ? (
+                            <div className="header__main">
+                                <p className="header__text">USD to UAH - {UsdUahRate}</p>
+                                <p className="header__text">EUR to UAH - {EurUahRate}</p>
+                            </div>
+                        )
+                        : (
+                            <p className="header__text">Loading...</p>
+                        )
+                }
+
             </header>
 
             <div className="main">
@@ -98,8 +105,14 @@ function App() {
                         <InputLabel htmlFor="demo-customized-textbox">Value</InputLabel>
                         <BootstrapInput
                             id="demo-customized-textbox"
-                            value={firstInputValue}
+                            value=
+                                {
+                                    inputInFocus === 'first'
+                                        ? firstInputValue
+                                        : calculateValue(secondInputValue, secondCurrency, firstCurrency)
+                                }
                             onChange={e => handleFirstInputChange(e.target.value)}
+                            onFocus={() => setInputInFocus('first')}
                             type="number"
                         />
                     </FormControl>
@@ -124,7 +137,14 @@ function App() {
                         <InputLabel htmlFor="demo-customized-textbox">Value</InputLabel>
                         <BootstrapInput
                             id="demo-customized-textbox"
-                            value={secondInputValue}
+                            value=
+                                {
+                                    inputInFocus === 'second'
+                                        ? secondInputValue
+                                        : calculateValue(firstInputValue, firstCurrency, secondCurrency)
+
+                                }
+                            onFocus={() => setInputInFocus('second')}
                             onChange={e => handleSecondInputChange(e.target.value)}
                             type="number"
                         />

@@ -9,7 +9,6 @@ body, p, h1 {
 
 .header {
   display: flex;
-  gap: 50px;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -23,6 +22,17 @@ body, p, h1 {
     font-weight: 600;
     font-size: 20px;
     letter-spacing: 2px;
+    animation-name: appearance;
+    animation-duration: 0.5s;
+  }
+
+  &__main {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    animation-name: appearance;
+    animation-duration: 1s;
   }
 }
 
@@ -46,4 +56,14 @@ body, p, h1 {
 
 .currencyField {
   width: 50px;
+}
+
+@keyframes appearance {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
