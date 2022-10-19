@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.scss';
 import './api';
 import {convert} from './api';
@@ -17,9 +17,11 @@ function App() {
     const [secondInputValue, setSecondInputValue] = useState(0);
     const [inputInFocus, setInputInFocus] = useState('');
 
-    convert('USD', 'UAH', setUsdUahRate);
-    convert('EUR', 'UAH', setEurUahRate);
-    convert('USD', 'EUR', setUsdEurRate);
+    useEffect(() => {
+        convert('USD', 'UAH', setUsdUahRate);
+        convert('EUR', 'UAH', setEurUahRate);
+        convert('USD', 'EUR', setUsdEurRate);
+    }, []);
 
     const handleFirstCurrencyChange = (value: any) => {
         setFirstCurrency(value);
@@ -30,10 +32,14 @@ function App() {
     };
 
     const handleFirstInputChange = (value: any) => {
-        setFirstInputValue(value);
+        if (value !== '-') {
+            setFirstInputValue(value);
+        }
     };
     const handleSecondInputChange = (value: any) => {
-        setSecondInputValue(value);
+        if(value !== '-') {
+            setSecondInputValue(value);
+        }
     };
 
     const calculateValue = (value: number, first: string, second: string): number => {
