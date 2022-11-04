@@ -11,8 +11,8 @@ function App() {
     const [UsdUahRate, setUsdUahRate] = useState(0);
     const [EurUahRate, setEurUahRate] = useState(0);
     const [UsdEurRate, setUsdEurRate] = useState(0);
-    const [firstCurrency, setFirstCurrency] = useState('USD');
-    const [secondCurrency, setSecondCurrency] = useState('UAH');
+    const [firstCurrencyItem, setFirstCurrencyItem] = useState('USD');
+    const [secondCurrencyItem, setSecondCurrencyItem] = useState('UAH');
     const [firstInputValue, setFirstInputValue] = useState(0);
     const [secondInputValue, setSecondInputValue] = useState(0);
     const [inputInFocus, setInputInFocus] = useState('');
@@ -24,11 +24,11 @@ function App() {
     }, []);
 
     const handleFirstCurrencyChange = (value: any) => {
-        setFirstCurrency(value);
+        setFirstCurrencyItem(value);
     };
 
     const handleSecondCurrencyChange = (value: any) => {
-        setSecondCurrency(value);
+        setSecondCurrencyItem(value);
     };
 
     const handleFirstInputChange = (value: any) => {
@@ -53,9 +53,9 @@ function App() {
         if (first === 'USD') {
             switch (second) {
             case 'UAH':
-                return UsdToUah;
+                return +UsdToUah.toFixed(2);
             case 'EUR':
-                return UsdToEur;
+                return +UsdToEur.toFixed(2);
             default:
                 return value;
             }
@@ -64,9 +64,9 @@ function App() {
         if (first === 'UAH') {
             switch (second) {
             case 'USD':
-                return UahToUsd;
+                return +UahToUsd.toFixed(2);
             case 'EUR':
-                return UahToEur;
+                return +UahToEur.toFixed(2);
             default:
                 return value;
             }
@@ -75,9 +75,9 @@ function App() {
         if (first === 'EUR') {
             switch (second) {
             case 'UAH':
-                return EurToUah;
+                return +EurToUah.toFixed(2);
             case 'USD':
-                return EurToUsd;
+                return +EurToUsd.toFixed(2);
             default:
                 return value;
             }
@@ -115,7 +115,7 @@ function App() {
                                 {
                                     inputInFocus === 'first'
                                         ? firstInputValue
-                                        : calculateValue(secondInputValue, secondCurrency, firstCurrency)
+                                        : calculateValue(secondInputValue, secondCurrencyItem, firstCurrencyItem)
                                 }
                             onChange={e => handleFirstInputChange(e.target.value)}
                             onFocus={() => setInputInFocus('first')}
@@ -127,7 +127,7 @@ function App() {
                         <InputLabel htmlFor="demo-customized-select-native">Currency</InputLabel>
                         <NativeSelect
                             id="demo-customized-select-native"
-                            value={firstCurrency}
+                            value={firstCurrencyItem}
                             onChange={e => handleFirstCurrencyChange(e.target.value)}
                             input={<BootstrapInput />}
                         >
@@ -147,7 +147,7 @@ function App() {
                                 {
                                     inputInFocus === 'second'
                                         ? secondInputValue
-                                        : calculateValue(firstInputValue, firstCurrency, secondCurrency)
+                                        : calculateValue(firstInputValue, firstCurrencyItem, secondCurrencyItem)
 
                                 }
                             onFocus={() => setInputInFocus('second')}
@@ -160,7 +160,7 @@ function App() {
                         <InputLabel htmlFor="demo-customized-select-native">Currency</InputLabel>
                         <NativeSelect
                             id="demo-customized-select-native"
-                            value={secondCurrency}
+                            value={secondCurrencyItem}
                             onChange={e => handleSecondCurrencyChange(e.target.value)}
                             input={<BootstrapInput />}
                         >
